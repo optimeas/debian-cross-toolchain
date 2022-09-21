@@ -11,5 +11,8 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
 set(QT_MOC_EXECUTABLE /usr/bin/moc)
-add_executable(Qt5::moc IMPORTED)
+if (NOT TARGET Qt5::moc)
+	add_executable(Qt5::moc IMPORTED)
+endif()
+
 set_property(TARGET Qt5::moc PROPERTY IMPORTED_LOCATION ${QT_MOC_EXECUTABLE})
