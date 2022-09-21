@@ -19,7 +19,7 @@ Requirements for the host system are:
 
 Install the following dependencies on your hostsystem:
 
-    sudo apt install -y debootstrap binfmt-support qemu-user-static
+    sudo apt install -y debootstrap binfmt-support qemu-user-static qtbase5-dev-tools
 
 ## Building the sysroot and installing the cross toolchain
 
