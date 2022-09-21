@@ -1,0 +1,2 @@
+docker run -it --rm -v ~/.ssh:/home/dockeruser/.ssh -v ~/repo/omdebian.d/smartcore-dpkg:/home/dockeruser/work \
+    -v ~/sysroots/bullseye-armf:/home/dockeruser/sysroot -w /home/dockeruser/work optimeas/debian-bullseye-armhf-cross:1.0
