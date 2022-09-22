@@ -1,2 +1,17 @@
-docker run -it --rm -v ~/.ssh:/home/dockeruser/.ssh -v ~/repo/omdebian.d/smartcore-dpkg:/home/dockeruser/work \
-    -v ~/sysroots/bullseye-armf:/home/dockeruser/sysroot -w /home/dockeruser/work optimeas/debian-bullseye-armhf-cross:1.0
+#!/bin/env bash
+
+usage()
+{
+	echo "usage: docker-run.sh WORKING_DIRECTORY SYSROOT_DIR"
+}
+
+if [ "$#" -ne "2" ]; then
+	usage
+	exit
+fi	
+
+WORKDIR=$1
+SYSROOTDIR=$2
+
+docker run -it --rm -v ~/.ssh:/home/dockeruser/.ssh -v ${WORKDIR}:/home/dockeruser/work \
+    -v ${SYSROOT}:/home/dockeruser/sysroot -w /home/dockeruser/work optimeas/debian-bullseye-armhf-cross:1.0
