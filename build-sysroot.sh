@@ -39,6 +39,8 @@ chroot_init(){
 	debootstrap --foreign --arch ${ARCH} --variant minbase ${DEB_RELEASE} ${DEST} 
 	
 	chroot ${DEST} /bin/bash -c "useradd -u 0 root"
+
+       	mkdir $DEST/mnt	
 }
 
 
@@ -94,7 +96,6 @@ main(){
 	target_sysroot_init $SYSROOT_PATH $CHROOT_PATH
 
 	install_toolchain_file toolchain.cmake ${SYSROOT_PATH}
-
 
 	echo "Succesfully build chroot at ${CHROOT_PATH}"
 }
