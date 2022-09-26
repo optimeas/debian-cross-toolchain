@@ -4,7 +4,12 @@ set(CMAKE_SYSTEM_PROCESSOR armhf)
 set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
 set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 
-set(CMAKE_SYSROOT <<sysroot>>)
+if(DEFINED ENV{DEB_CROSS_SYSROOT})
+	set(CMAKE_SYSROOT "$ENV{DEB_CROSS_SYSROOT}")
+else()
+	message("DEB_CROSS_SYSROOT environment variable not set. Using original sysroot install location.")
+	set(CMAKE_SYSROOT <<sysroot>>)
+endif()
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
