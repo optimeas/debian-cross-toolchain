@@ -1,6 +1,5 @@
-cmake
 libc6-dev
-libstdc++-10-dev
+libstdc++-8-dev
 qtbase5-dev
 qt5-qmake
 libqt5serialport5-dev
@@ -13,9 +12,11 @@ libmodbus-dev
 libpaho-mqtt-dev 
 libssl-dev
 libmsgpack-dev
-protobuf-compiler-grpc
-libgrpc++-dev
 libi2c-dev
 libpaho-mqttpp-dev
 libosf-dev
 libudev-dev
+libqt5serialbus5-plugins
+cmake/buster-backports
+protobuf-compiler-grpc/buster-backports
+libgrpc++-dev/buster-backports

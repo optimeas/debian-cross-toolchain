@@ -2,7 +2,7 @@
 
 HOST_ARCH=amd64
 TARGET_ARCH=armhf
-DEB_RELEASE=bullseye
+DEB_RELEASE=buster
 CHROOT_PATH="$(realpath $1)/${DEB_RELEASE}-${TARGET_ARCH}-chroot"
 SYSROOT_PATH="$(realpath $1)/${DEB_RELEASE}-${TARGET_ARCH}-sysroot"
 
@@ -22,7 +22,7 @@ chroot_install_gpg_key()
 	local name=$2
 
 	chroot ${CHROOT_PATH} /bin/bash -c \
-		"curl -fsSL $1 | gpg --dearmor | tee /etc/apt/trusted.gpg.d/$2.gpg > /dev/null" 
+		"curl -kfsSL $1 | gpg --dearmor | tee /etc/apt/trusted.gpg.d/$2.gpg > /dev/null" 
 }
 
 
@@ -36,11 +36,13 @@ chroot_init(){
 	local ARCH=$1
 	local DEST=$2
 
-	debootstrap --foreign --arch ${ARCH} --variant minbase ${DEB_RELEASE} ${DEST} 
+	debootstrap --foreign --arch ${ARCH} ${DEB_RELEASE} ${DEST} 
+
+	ln -s /usr/bin/mawk ${DEST}/usr/bin/awk
 	
 	chroot ${DEST} /bin/bash -c "useradd -u 0 root"
 
-       	mkdir $DEST/mnt	
+	mkdir $DEST/mnt	
 }
 
 
@@ -75,21 +77,21 @@ install_toolchain_file(){
 main(){
 	if [ ! -f ${CHROOT_PATH}/etc/os-release ]; then
 		chroot_init ${TARGET_ARCH} ${CHROOT_PATH}
-	fi
-
-	#install_packages ${CHROOT_PATH} init.packages
-
-	while IFS="" read -r line; do
-		local name=${line%%=*}
-		local url=${line#*=}
 		
-		echo "$line"
-		chroot_install_gpg_key $url $name
-	done < apt.keys
+		install_packages ${CHROOT_PATH} init.packages
 
-	for file in "apt.sources.d/*"; do
-		install_file_into_chroot $file /etc/apt/sources.list.d/
-	done
+		while IFS="" read -r line; do
+			local name=${line%%=*}
+			local url=${line#*=}
+			
+			echo "$line"
+			chroot_install_gpg_key $url $name
+		done < apt.keys
+
+		for file in apt.sources.d/*; do
+			install_file_into_chroot $file /etc/apt/sources.list.d/
+		done
+	fi
 
 	install_packages ${CHROOT_PATH} target.packages
 

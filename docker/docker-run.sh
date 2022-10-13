@@ -14,4 +14,4 @@ WORKDIR=$1
 SYSROOTDIR=$2
 
 docker run -it --rm -v ~/.ssh:/home/dockeruser/.ssh -v ${WORKDIR}:/home/dockeruser/work \
-    -v ${SYSROOTDIR}:/home/dockeruser/sysroot optimeas/debian-bullseye-armhf-cross:1.0 ./docker-init.sh
+    -v ${SYSROOTDIR}:/home/dockeruser/sysroot optimeas/debian-buster-armhf-cross:1.0 ./docker-init.sh
