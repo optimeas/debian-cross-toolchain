@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y debootstrap binfmt-support qemu-user-static qtbase5-dev-tools \
-     g++-arm-linux-gnueabihf gdb-multiarch cmake git fakeroot sudo devscripts bindfs
+     g++-arm-linux-gnueabihf gdb-multiarch cmake git fakeroot sudo devscripts bindfs protobuf-compiler
 
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
