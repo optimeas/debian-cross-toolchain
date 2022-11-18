@@ -77,7 +77,7 @@ main(){
 		chroot_init ${TARGET_ARCH} ${CHROOT_PATH}
 	fi
 
-	#install_packages ${CHROOT_PATH} init.packages
+	install_packages ${CHROOT_PATH} init.packages
 
 	while IFS="" read -r line; do
 		local name=${line%%=*}
